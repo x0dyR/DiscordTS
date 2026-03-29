@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const { MONGO_URI, DISCORD_TOKEN, DISCORD_CLIENT_ID, GUILD_ID, DEV_ID } = process.env;
+const { MONGO_URI, DISCORD_TOKEN, DISCORD_CLIENT_ID, GUILD_ID = '', DEV_ID = '' } = process.env;
 
 switch (true) {
 case MONGO_URI == null:
@@ -24,7 +24,10 @@ export const config = {
 	MONGO_URI: MONGO_URI,
 	DISCORD_TOKEN: DISCORD_TOKEN,
 	CLIENT_ID: DISCORD_CLIENT_ID,
-	GUILD_ID: GUILD_ID,
+	GUILD_ID: GUILD_ID
+		.split(',')
+		.map(id => id.trim())
+		.filter(id => id.length > 0),
 	DEV_ID: DEV_ID
 		.split(',')
 		.map(id => id.trim())

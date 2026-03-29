@@ -24,16 +24,6 @@ const client = new Client({
 await connect();
 
 client.once(Events.ClientReady, async () => {
-	console.log('DEVS:\n');
-	for (let i = 0; i < config.DEV_ID.length; i++) {
-		const guild = await client.guilds.fetch(config.GUILD_ID);
-
-		const devID = config.DEV_ID[i];
-		const member = await guild.members.fetch(devID);
-		console.log(`name: ${member.displayName}, nickname: ${member.user.username}`);
-	}
-
-	console.log('\n\nBot ready');
 	await deployCommands();
 });
 

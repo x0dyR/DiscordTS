@@ -7,8 +7,8 @@ export const casinoCommand = {
 	data: new SlashCommandBuilder()
 		.setName('casino')
 		.setDescription('spend money')
-		.addIntegerOption((integer) => {
-			return integer
+		.addIntegerOption((option) => {
+			return option
 				.setName(input)
 				.setDescription('Bet value')
 				.setRequired(true);
