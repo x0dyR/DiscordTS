@@ -9,8 +9,8 @@ const rest = new REST().setToken(config.DISCORD_TOKEN);
 export async function deployCommands() {
 	console.log('Deploying commands...');
 
-	for (let i = 0; i < config.GUILD_ID.length; i++) {
-		const guildId = config.GUILD_ID[i];
+	for (const e of config.GUILD_ID) {
+		const guildId = e;
 
 		console.log(`Deploying to guild ${guildId}...`);
 
@@ -20,7 +20,5 @@ export async function deployCommands() {
 				body: commandsData,
 			},
 		);
-
-		console.log(`Commands deployed to guild ${guildId}`);
 	}
 }

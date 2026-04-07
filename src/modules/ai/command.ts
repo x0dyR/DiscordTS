@@ -13,6 +13,7 @@ const EMBED_LIMIT = 4096;
 const FETCH_MESSAGES_LIMIT = 100;
 const userInput = 'request';
 const invisibleMessage = 'temporary';
+const collectMessages = 'collect';
 const pickChannel = 'channel';
 
 export const aiCommand = {
@@ -23,6 +24,12 @@ export const aiCommand = {
 			return option
 				.setName(userInput)
 				.setDescription('your message')
+				.setRequired(true);
+		})
+		.addBooleanOption(option => {
+			return option
+				.setName(collectMessages)
+				.setDescription('collect message from channel(default current channel). Ephemeral messages cant be collected')
 				.setRequired(true);
 		})
 		.addBooleanOption(option => {
@@ -38,6 +45,7 @@ export const aiCommand = {
 				.setRequired(false);
 		}),
 	execute: async function(interaction: ChatInputCommandInteraction) {
+		const messageHistory = interaction.options.getBoolean(collectMessages, true);
 		const currentChannel = interaction.options.getChannel(pickChannel) ?? interaction.channel;
 		const isTemporary = interaction.options.getBoolean(invisibleMessage) ?? true;
 		const content = interaction.options.getString(userInput, true);
@@ -51,7 +59,7 @@ export const aiCommand = {
 		}
 
 		const ollama = new Ollama();
-		const history = await fetchMessages(currentChannel, 20, interaction.user.id);
+		const history = await fetchMessages(currentChannel, messageHistory ? 100 : 0, interaction.user.id);
 		const prompt = buildPrompt(history, content, interaction.user.username, interaction.user.displayName);
 
 		const response = await ollama.chat({
