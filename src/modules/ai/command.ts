@@ -23,25 +23,45 @@ export const aiCommand = {
 		.addStringOption(option => {
 			return option
 				.setName(userInput)
+				// `.setNameLocalizations({
+				// 	ru: 'запорос',
+				// 	ja: 'котакпас',
+				// })`
 				.setDescription('your message')
+				.setDescriptionLocalizations({
+					ru: 'ваш запрос',
+					ja: 'котакпас',
+				})
 				.setRequired(true);
 		})
 		.addBooleanOption(option => {
 			return option
 				.setName(collectMessages)
 				.setDescription('collect message from channel(default current channel). Ephemeral messages cant be collected')
+				.setDescriptionLocalizations({
+					ru: 'Собирать сообщения(из выбранного канала)?',
+					ja: 'Котакпас котакпас котакпас?',
+				})
 				.setRequired(true);
 		})
 		.addBooleanOption(option => {
 			return option
 				.setName(invisibleMessage)
 				.setDescription('invisible message')
+				.setDescriptionLocalizations({
+					ru: 'невидимое сообщение?',
+					ja: 'котакпас кормекен ба?',
+				})
 				.setRequired(false);
 		})
 		.addChannelOption(option => {
 			return option
 				.setName(pickChannel)
 				.setDescription('select channel to collect messages')
+				.setDescriptionLocalizations({
+					ru: 'Выбор канала',
+					ja: 'Кайда котакпас алу',
+				})
 				.setRequired(false);
 		}),
 	execute: async function(interaction: ChatInputCommandInteraction) {
